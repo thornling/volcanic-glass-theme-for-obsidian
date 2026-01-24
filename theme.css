@@ -1,8 +1,9 @@
 /* 
   name: volcanic glass 
-  version: 1.0.0 
+  version: 1.0.1
   author: thornling
   description: a transparent theme for dark/light mode (windows only) */
+
 
 /* variables */
 .theme-dark, .theme-light {
@@ -150,17 +151,29 @@ body.obsidian-app {
   --text-normal: var(--text-normal-reversed) !important;
   --text-muted: var(--text-muted-reversed) !important;
   --view-header-title-color: var(--text-normal-reversed) !important;
-      /* table override */
-  --table-header-color: var(--text-normal-reversed) !important;
+}
+      /* code and table fix */
+.mod-stacked .workspace-leaf:not(.mod-active) :is(
+  .cm-inline-code, 
+  .HyperMD-codeblock,
+  .table-editor th, 
+  .table-editor td
+) {
+  color: var(--text-muted-reversed) !important;
+}
+      /* border fix */
+.cm-line hr {
+  --background-modifier-border: var(--text-muted);
+  border: none !important;
+  border-top: 1px solid var(--background-modifier-border) !important;
+  display: block !important;
+  opacity: 1 !important;
+  width: 100% !important;
 }
       /* accent colors */
-.workspace-leaf:not(.mod-active) .workspace-leaf-content:is([data-type="markdown"], [data-type="canvas"], [data-type="bases"])
-  & .cm-link,
-  & .cm-underline,
-  & .external-link,
-  & .internal-link {
-    color: var(--link-color) !important;
-    filter: opacity(0.6) saturate(0.7) !important;
+.workspace-leaf:not(.mod-active) .cm-content :is(.cm-link, .cm-underline, .external-link, .internal-link) {
+  color: var(--link-color) !important;
+  filter: opacity(0.6) saturate(0.7) !important;
 }
   /* stacked */
     /* leaf */
@@ -281,7 +294,6 @@ body.obsidian-app {
     inset 0px 0px 15px 2px rgba(0,0,0,0.2),
     inset 0px 0px 5px 1px rgba(0,0,0,0.4),
     0 1px 1px rgba(255,255,255,0.1) !important;
-
 }
 .table-editor {
     background-color: transparent !important;
@@ -291,6 +303,11 @@ body.obsidian-app {
 .table-editor td {
   border: 1px solid var(--text-muted-reversed) !important;
   background-color: transparent !important;
+}
+  /* text areas */
+textarea.file-recovery-text,
+.setting-item-control textarea {
+  background-color: var(--glass-window)
 }
 
 /* specific elements */
@@ -317,8 +334,4 @@ body.obsidian-app {
   -webkit-backdrop-filter: var(--blur-overlay) !important;
   backdrop-filter: var(--blur-overlay) !important;
   background-color: transparent;
-}
-  /* file recovery text */
-textarea.file-recovery-text {
-  background-color: var(--glass-window)
 }
