@@ -1,8 +1,10 @@
 #### volcanic glass theme for obsidian
+
 <p align="center">
   <img src="assets/dark.png" width="45%" />
   <img src="assets/light.png" width="45%" />
 </p>
+
 ###### description:
 a dark/light mode transparent theme - requires windhawk/micaforeveryone. (currently windows only)
 
@@ -32,4 +34,5 @@ a dark/light mode transparent theme - requires windhawk/micaforeveryone. (curren
 
 ###### upcoming:
 - mac version
+
 - mobile wallpaper plugin
