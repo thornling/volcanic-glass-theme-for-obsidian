@@ -147,7 +147,7 @@ body.obsidian-app {
 .mod-stacked .workspace-leaf:not(.mod-active) .cm-content {
   color: var(--text-normal-reversed) !important;
 }
-.mod-stacked .workspace-leaf:not(.mod-active) .workspace-leaf-content:is([data-type="markdown"], [data-type="canvas"], [data-type="bases"], [data-type="empty"]) {
+.mod-stacked .workspace-leaf:not(.mod-active) .workspace-leaf-content:is([data-type="markdown"], [data-type="canvas"], [data-type="bases"], [data-type="graph"], [data-type="empty"]) {
   --text-normal: var(--text-normal-reversed) !important;
   --text-muted: var(--text-muted-reversed) !important;
   --view-header-title-color: var(--text-normal-reversed) !important;
@@ -177,7 +177,7 @@ body.obsidian-app {
 }
   /* stacked */
     /* leaf */
-.mod-stacked .workspace-leaf-content:is([data-type="markdown"], [data-type="canvas"], [data-type="bases"], [data-type="empty"]) {
+.mod-stacked .workspace-leaf-content:is([data-type="markdown"], [data-type="canvas"], [data-type="bases"], [data-type="graph"], [data-type="empty"]) {
   background: linear-gradient(
     140deg,
     var(--inactive-gradient-1) 0%,
@@ -193,7 +193,7 @@ body.obsidian-app {
 }
 
       /* active */
-.mod-stacked .workspace-leaf.mod-active:has(.workspace-leaf-content:is([data-type="markdown"], [data-type="canvas"], [data-type="bases"], [data-type="empty"])) {
+.mod-stacked .workspace-leaf.mod-active:has(.workspace-leaf-content:is([data-type="markdown"], [data-type="canvas"], [data-type="bases"], [data-type="graph"], [data-type="empty"])) {
   background: linear-gradient(
     140deg,
     var(--active-gradient-1) 0%,
