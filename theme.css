@@ -4,28 +4,28 @@
   author: thornling
   description: a transparent theme for dark/light mode (windows only) */
 
-
 /* variables */
-.theme-dark, .theme-light {
+body {
   --blur-window: blur(5px);
   --blur-overlay: blur(25px) saturate(150%) brightness(80%);
-  --text-normal-reversed: rgba(0,0,0,0.9);
+  --text-normal-inactive: rgba(0,0,0,0.9);
 }
 .theme-dark {
   --glass-window: rgba(0,0,0,0.3);
   --glass-modal: rgba(25,29,36,0.4);
   --glass-menu: rgba(0,0,0,0.6);
 
-  --glass-window-light: rgba(255,255,255,0.1);
-  --glass-window-frosted: rgba(30,30,30,0.7);
+  --glass-window-inactive: rgba(255,255,255,0.1);
+  --glass-window-active: rgba(30,30,30,0.7);
   
   --text-normal: rgba(255,255,255,1);
   --text-muted: rgba(255,255,255,0.68);
   --text-faint: rgba(255,255,255,0.25);
 
-  --text-normal-dull: rgba(20,20,20,1);
-  --text-muted-reversed: rgba(0,0,0,0.7);
+  --text-muted-inactive: rgba(0,0,0,0.7);
   --text-embossed: rgba(0,0,0,0.9);
+
+  --dropdown-color: rgba(20,20,20,1);
 
   --background-modifier-hover: rgba(255,255,255,0.05);
   --interactive-hover: rgba(255,255,255,0.01);
@@ -43,16 +43,17 @@
   --glass-modal: rgba(225,240,255,0.3);
   --glass-menu: rgba(225,240,255,0.6);
   
-  --glass-window-light: rgba(255,255,255,0.35);
-  --glass-window-frosted: rgba(255,255,255,0.8);
+  --glass-window-inactive: rgba(255,255,255,0.35);
+  --glass-window-active: rgba(255,255,255,0.8);
 
   --text-normal: rgba(0,0,0,1);
   --text-muted: rgba(0,0,0,0.68);
   --text-faint: rgba(0,0,0,0.25);
 
-  --text-normal-dull: rgba(230,230,230,1);
-  --text-muted-reversed: rgba(0,0,0,0.4);
+  --text-muted-inactive: rgba(0,0,0,0.4);
   --text-embossed: rgba(0,0,0,0.8);
+
+  --dropdown-color: rgba(230,230,230,1);
 
   --background-modifier-hover: rgba(255,255,255,0.12);
   --interactive-hover: rgba(255,255,255,0.5);
@@ -67,21 +68,20 @@
 }
   /* base transparency */
 .theme-dark, .theme-light {
-  --color-base-00: transparent !important;
-  --background-primary: transparent !important;
-  --background-primary-alt: transparent !important;
-  --background-secondary: transparent !important;
-  --background-secondary-alt: transparent !important;
-  --workspace-background-translucent: transparent !important;
+  --color-base-00: transparent;
+  --background-primary: transparent;
+  --background-primary-alt: transparent;
+  --background-secondary: transparent;
+  --background-secondary-alt: transparent;
+  --workspace-background-translucent: transparent;
   --background-modifier-border: transparent;
 }
 
 /* containers */
   /* app */
 body.obsidian-app {
-  background-color: var(--glass-window) !important;
-  -webkit-backdrop-filter: var(--blur-window) !important;
-  backdrop-filter: var(--blur-window) !important;
+  background-color: var(--glass-window);
+  backdrop-filter: var(--blur-window);
 }
   /* overlay */
     /* modal */
@@ -91,9 +91,9 @@ body.obsidian-app {
 /* mobile */
 .workspace-drawer .mod,
 .workspace-drawer-inner {
-  -webkit-backdrop-filter: var(--blur-overlay) !important;
-  backdrop-filter: var(--blur-overlay) !important;
+  backdrop-filter: var(--blur-overlay);
   background-color: var(--glass-modal) !important;
+  border: none;
   box-shadow: 
     0 0 0 1px rgba(0,0,0,0.2),
     0 10px 20px rgba(0,0,0,0.3),
@@ -102,17 +102,14 @@ body.obsidian-app {
   transition: 
     background-color 0.3s ease,
     opacity 0.3s ease,
-    box-shadow 0.3s ease !important;
+    box-shadow 0.3s ease;
 }
     /* menu */
 .menu,
-.prompt-input-container:hover .prompt-input,
-/* plugin elements */
-.subitem,
-.x-color-picker-wrapper {
-  -webkit-backdrop-filter: var(--blur-overlay) !important;
-  backdrop-filter: var(--blur-overlay) !important;
+.prompt-input-container:hover .prompt-input {
+  backdrop-filter: var(--blur-overlay);
   background-color: var(--glass-menu);
+  border: none;
 }	
 
 /* workspace */
@@ -120,18 +117,19 @@ body.obsidian-app {
     /* titles */
 .mod-stacked .workspace-tab-header .workspace-tab-header-inner-title,
 .workspace-tab-header:not(.is-active) .workspace-tab-header-inner-title {
-  color: var(--text-embossed) !important;
+  color: var(--text-embossed);
   filter: drop-shadow(-0.5px 0.5px 0px rgba(255,255,255,0.1));
 }
     /* icons */
-.mod-stacked .workspace-tab-header .workspace-tab-header-inner-icon svg,
-.mod-stacked .workspace-tab-header .workspace-tab-header-inner-close-button svg,
-.mod-stacked .workspace-leaf:not(.mod-active) .view-header-nav-buttons .clickable-icon svg,
-.workspace-tab-header:not(.is-active) .workspace-tab-header-inner-icon svg,
-.workspace-tab-header:not(.is-active) .workspace-tab-header-inner-close-button svg {
-  stroke-width: 2.5px !important;
-  color: var(--text-muted-reversed) !important;
-  filter: drop-shadow(-0.5px 0.5px 0px rgba(255,255,255,0.1)) !important;
+.mod-stacked :is(.workspace-tab-header:not(.is-active), .workspace-leaf:not(.mod-active)) :is(
+  .workspace-tab-header-inner-icon,
+  .workspace-tab-header-inner-close-button,
+  .view-header-nav-buttons .clickable-icon,
+  .view-actions .view-action
+) svg {
+  stroke-width: 2.5px;
+  color: var(--text-muted-inactive);
+  filter: drop-shadow(-0.5px 0.5px 0px rgba(255,255,255,0.1));
 }
     /* x button */
 .mod-stacked .workspace-tab-header:not(.is-active) .workspace-tab-header-inner-close-button {
@@ -145,12 +143,20 @@ body.obsidian-app {
 .mod-stacked .workspace-leaf:not(.mod-active) .inline-title,
     /* content */
 .mod-stacked .workspace-leaf:not(.mod-active) .cm-content {
-  color: var(--text-normal-reversed) !important;
+  color: var(--text-normal-inactive);
 }
-.mod-stacked .workspace-leaf:not(.mod-active) .workspace-leaf-content:is([data-type="markdown"], [data-type="canvas"], [data-type="bases"], [data-type="graph"], [data-type="empty"]) {
-  --text-normal: var(--text-normal-reversed) !important;
-  --text-muted: var(--text-muted-reversed) !important;
-  --view-header-title-color: var(--text-normal-reversed) !important;
+.mod-stacked .workspace-leaf:not(.mod-active) .workspace-leaf-content:not(
+  [data-type="file-explorer"],
+  [data-type="search"],
+  [data-type="bookmark"],
+  [data-type="backlink"],
+  [data-type="outgoing-link"],
+  [data-type="tag"],
+  [data-type="outline"]
+) {
+  --text-normal: var(--text-normal-inactive);
+  --text-muted: var(--text-muted-inactive);
+  --view-header-title-color: var(--text-normal-inactive);
 }
       /* code and table fix */
 .mod-stacked .workspace-leaf:not(.mod-active) :is(
@@ -159,74 +165,79 @@ body.obsidian-app {
   .table-editor th, 
   .table-editor td
 ) {
-  color: var(--text-muted-reversed) !important;
+  color: var(--text-muted-inactive);
 }
       /* border fix */
 .cm-line hr {
   --background-modifier-border: var(--text-muted);
-  border: none !important;
   border-top: 1px solid var(--background-modifier-border) !important;
-  display: block !important;
-  opacity: 1 !important;
-  width: 100% !important;
 }
       /* accent colors */
 .workspace-leaf:not(.mod-active) .cm-content :is(.cm-link, .cm-underline, .external-link, .internal-link) {
-  color: var(--link-color) !important;
-  filter: opacity(0.6) saturate(0.7) !important;
+  color: var(--link-color);
+  filter: opacity(0.6) saturate(0.7);
 }
   /* stacked */
     /* leaf */
-.mod-stacked .workspace-leaf-content:is([data-type="markdown"], [data-type="canvas"], [data-type="bases"], [data-type="graph"], [data-type="empty"]) {
+.mod-stacked .workspace-leaf-content:not(
+  [data-type="file-explorer"],
+  [data-type="search"],
+  [data-type="bookmark"],
+  [data-type="backlink"],
+  [data-type="outgoing-link"],
+  [data-type="tag"],
+  [data-type="outline"]
+) {
   background: linear-gradient(
     140deg,
     var(--inactive-gradient-1) 0%,
     var(--inactive-gradient-2) 90%,
-    var(--inactive-gradient-3) 100%
-  ) !important;
-  -webkit-backdrop-filter: var(--blur-overlay) !important;
-  backdrop-filter: var(--blur-overlay) !important;
+    var(--inactive-gradient-3) 100%);
+  backdrop-filter: var(--blur-overlay);
   transition: 
     background-color 0.3s ease,
     opacity 0.3s ease,
-    box-shadow 0.3s ease !important;
+    box-shadow 0.3s ease;
 }
-
       /* active */
-.mod-stacked .workspace-leaf.mod-active:has(.workspace-leaf-content:is([data-type="markdown"], [data-type="canvas"], [data-type="bases"], [data-type="graph"], [data-type="empty"])) {
+.mod-stacked .workspace-leaf.mod-active:has(.workspace-leaf-content:not(
+  [data-type="file-explorer"],
+  [data-type="search"],
+  [data-type="bookmark"],
+  [data-type="backlink"],
+  [data-type="outgoing-link"],
+  [data-type="tag"],
+  [data-type="outline"]
+)) {
   background: linear-gradient(
     140deg,
     var(--active-gradient-1) 0%,
-    var(--active-gradient-2) 100%
-  ) !important;
-  background-color: var(--glass-window) !important;
+    var(--active-gradient-2) 100%);
+  background-color: var(--glass-window);
   clip-path: inset(-100px -100px -100px 0px);
   box-shadow: 
     0 0 0 1px rgba(0,0,0,0.1),
     0 10px 20px rgba(0,0,0,0.5),
     0 20px 50px rgba(0,0,0,0.4),
-    0 0 80px rgba(0,0,0,0.8) !important;
+    0 0 80px rgba(0,0,0,0.8);
 }
     /* spine */
 .mod-stacked .workspace-tab-header {
-  background-color: var(--glass-window-light) !important;
+  background-color: var(--glass-window-inactive) !important;
   box-shadow: 
-    inset 1px 0 0 rgba(255,255,255,0.3),
-    inset -1px 0 0 rgba(0,0,0,0.3),
-    -5px 0 15px -5px rgba(0,0,0,0.3),
-    -6px 0 10px -4px rgba(0,0,0,0.5);
-  -webkit-backdrop-filter: var(--blur-overlay) !important;
-  backdrop-filter: var(--blur-overlay) !important;
+    -5px 0 15px -5px rgba(0,0,0,0.1),
+    -6px 0 10px -4px rgba(0,0,0,0.2) !important;
+  backdrop-filter: var(--blur-overlay);
   border-radius: 4px 0 0 4px !important;
-  border-left: 1px solid rgba(255,255,255,0.1) !important;
+  border-left: 1px solid rgba(255,255,255,0.1);
   transition: 
     background-color 0.3s ease,
     opacity 0.3s ease,
-    box-shadow 0.3s ease !important;
+    box-shadow 0.3s ease;
 }
       /* active */
 .mod-stacked .workspace-tab-header:has(+ .workspace-leaf.mod-active) {
-  background-color: var(--glass-window-frosted) !important;
+  background-color: var(--glass-window-active) !important;
   clip-path: inset(-100px 0px -100px -100px);
   box-shadow: 
     0 0 0 1px rgba(0,0,0,0.1),
@@ -236,23 +247,24 @@ body.obsidian-app {
 }
         /* title */
 .mod-stacked .workspace-tab-header:has(+ .workspace-leaf.mod-active) .workspace-tab-header-inner-title {
-  color: var(--text-normal) !important;
-  filter: none !important;
+  color: var(--text-normal);
+  filter: none;
 }
         /* icons */
-.mod-stacked .workspace-tab-header:has(+ .workspace-leaf.mod-active) .workspace-tab-header-inner-icon svg,
-.mod-stacked .workspace-tab-header:has(+ .workspace-leaf.mod-active) .workspace-tab-header-inner-close-button svg {
-  color: var(--text-normal) !important;
-  stroke-width: 2px !important;
-  filter: none !important;
+.mod-stacked .workspace-tab-header:has(+ .workspace-leaf.mod-active) :is(
+  .workspace-tab-header-inner-icon svg,
+  .workspace-tab-header-inner-close-button svg
+) {
+  color: var(--text-normal);
+  stroke-width: 2px;
+  filter: none;
 }
 
 /* interactive */
   /* status bar */
 .status-bar {
-  background-color: var(--glass-modal) !important;
-  -webkit-backdrop-filter: var(--blur-overlay) !important;
-  backdrop-filter: var(--blur-overlay) !important;
+  background-color: var(--glass-modal);
+  backdrop-filter: var(--blur-overlay);
 }
   /* input box */
 .setting-item-control input[type="text"],
@@ -260,78 +272,77 @@ body.obsidian-app {
 .search-input-container input[type="search"],
 .search-input-container.document-search-input input[type="text"],
 .document-replace-input {
-  background-color: var(--glass-window) !important;
-  backdrop-filter: blur(15px) saturate(180%) !important;
-  -webkit-backdrop-filter: blur(15px) saturate(180%) !important;
+  background-color: var(--glass-window);
+  backdrop-filter: var(--blur-overlay);
   box-shadow: 
     inset 0 4px 8px rgba(0,0,0,0.3),
     inset 0 1px 3px rgba(0,0,0,0.2),
-    0 1px 1px rgba(255,255,255,0.1) !important;
+    0 1px 1px rgba(255,255,255,0.1);
   transition: 
     background-color 0.2s ease,
-    box-shadow 0.2s ease !important;
+    box-shadow 0.2s ease;
 }
     /* focus */
-.setting-item-control input[type="text"]:focus,
-.search-input-container input[type="search"]:focus,
-.search-input-container.document-search-input input[type="text"]:focus,
-.document-replace-input:focus {
-  background-color: var(--glass-modal) !important;
+:is(
+  .setting-item-control input[type="text"],
+  .search-input-container input[type="search"],
+  .search-input-container.document-search-input input[type="text"],
+  .document-replace-input
+):focus {
+  background-color: var(--glass-modal);
   box-shadow: 
     inset 0 5px 12px rgba(0,0,0,0.4),
-    0 0 0 1px rgba(255,255,255,0.1) !important;
+    0 0 0 1px rgba(255,255,255,0.1);
 }
   /* dropdown menu */
 .dropdown option {
-  background-color: var(--text-normal-dull) !important;
+  background-color: var(--dropdown-color);
 }
   /* tables */
 .cm-embed-block.cm-table-widget .table-wrapper {
-  background-color: var(--glass-window) !important;
+  background-color: var(--glass-window);
   border-radius: 2px;
   overflow: hidden; 
   box-shadow: 
     inset 0px 0px 15px 2px rgba(0,0,0,0.2),
     inset 0px 0px 5px 1px rgba(0,0,0,0.4),
-    0 1px 1px rgba(255,255,255,0.1) !important;
-}
-.table-editor {
-    background-color: transparent !important;
-    border-collapse: collapse !important;
+    0 1px 1px rgba(255,255,255,0.1);
 }
 .table-editor th,
 .table-editor td {
-  border: 1px solid var(--text-muted-reversed) !important;
-  background-color: transparent !important;
+  border: 1px solid var(--text-muted-inactive) !important;
 }
   /* text areas */
 textarea.file-recovery-text,
 .setting-item-control textarea {
-  background-color: var(--glass-window)
+  background-color: var(--glass-window);
 }
 
 /* specific elements */
   /* base header */
 .bases-thead .bases-tr,
 .bases-thead .bases-td {
-  overflow: visible !important;
+  overflow: visible;
 }
 .bases-table-header {
-  -webkit-backdrop-filter: var(--blur-overlay) !important;
-  backdrop-filter: var(--blur-window) !important;
-  background-color: var(--glass-window) !important;
+  backdrop-filter: var(--blur-window);
+  background-color: var(--glass-window);
   clip-path: inset(-100px -100px -100px -100px);
   box-shadow: 
     0 1px 4px rgba(0,0,0,0.3),
     0 0 0 1px rgba(0,0,0,0.15);
-  border-radius: 4px !important;
-  border: 1px solid rgba(255,255,255,0.1) !important;
-  border-bottom: 1px solid rgba(0,0,0,0.2) !important;
+  border-radius: 4px;
+  border-bottom: 1px solid rgba(0,0,0,0.2);
 }
   /* canvas buttons */
 .canvas-control-group.mod-raised,
 .canvas-controls .canvas-control-group.mod-raised {
-  -webkit-backdrop-filter: var(--blur-overlay) !important;
-  backdrop-filter: var(--blur-overlay) !important;
+  backdrop-filter: var(--blur-overlay);
+  border: none;
+  border-bottom: 0.1px solid rgba(0,0,0,0.2);
+  border-top: 0.1px solid rgba(255,255,255,0.1);
   background-color: transparent;
+  box-shadow: 
+    0 1px 4px rgba(0,0,0,0.2),
+    0 0 0 1px rgba(0,0,0,0.01);
 }
