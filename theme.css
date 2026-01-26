@@ -89,6 +89,7 @@ body.obsidian-app {
 .modal,
 .prompt,
 .suggestion-container,
+.suggestion-container[class*="mod-"],
       /* mobile */
 .workspace-drawer .mod,
 .workspace-drawer-inner,
@@ -111,15 +112,31 @@ body.obsidian-app {
     opacity 0.3s ease,
     box-shadow 0.3s ease;
 }
+.theme-dark :is(
+  .modal,
+  .prompt,
+  .suggestion-container,
+  .suggestion-container[class*="mod-"]
+)::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  clip-path: inherit;
+  background: rgba(0, 0, 0, 0.3);
+}
     /* menu */
 .menu,
+.menu[class*="mod-"],
 .prompt-input-container:hover .prompt-input,
 .notice,
       /* mobile */
-.mobile-navbar, {
+.mobile-navbar,
+.native-menu,
+.mobile-option-container {
   backdrop-filter: var(--blur-overlay);
   -webkit-backdrop-filter: var(--blur-overlay);
-  background-color: var(--glass-menu);
+  background-color: var(--glass-menu) !important;
   border: none;
 }	
 
@@ -350,6 +367,14 @@ textarea.file-recovery-text,
   border-radius: 4px;
   border-bottom: 1px solid rgba(0,0,0,0.2);
   border-top: 1px solid rgba(255,255,255,0.03);
+}
+.theme-dark .bases-table-header::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  clip-path: inherit;
+  background: rgba(0, 0, 0, 0.3);
 }
   /* canvas */
 .canvas-control-group.mod-raised,
