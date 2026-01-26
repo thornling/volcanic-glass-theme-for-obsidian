@@ -32,7 +32,8 @@ a dark/light mode transparent theme - requires windhawk/micaforeveryone. (curren
 4. paste into the css. save.
 5. back in obsidian, toggle volcanic glass (or whatever you named your css) on from the snippets list.
 
+###### credits:
+[Obsidian-Transparent](https://github.com/Oczko24/Obsidian-transparent) by Oczko24
 ###### upcoming:
 - mac version
-
 - mobile wallpaper plugin
