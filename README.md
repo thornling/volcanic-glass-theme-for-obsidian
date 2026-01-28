@@ -1,39 +1,40 @@
-#### volcanic glass theme for obsidian
+#### Volcanic Glass Theme
+*For Obsidian*
 
 <p align="center">
   <img src="assets/dark.png" width="45%" />
   <img src="assets/light.png" width="45%" />
 </p>
 
-###### description:
-a dark/light mode transparent theme - requires windhawk/micaforeveryone. (currently windows only)
+###### Description:
+A Dark/Light Mode transparent theme - requires Windhawk/MicaForEveryone. (Currently Windows only)
 
-###### github:
-- [obsidian](https://obsidian.md) – required
-- [volcanic glass theme](https://github.com/thornling/volcanic-glass-theme-for-obsidian/) – theme file
-- [windhawk](https://windhawk.net/) (preferred)
-- micaforeveryone (optional)
-	- [github](https://github.com/MicaForEveryone/MicaForEveryone) or [windows store](https://apps.microsoft.com/detail/9p8v68p4z78p?hl=en-US&gl=US)
+###### GitHub:
+- [Obsidian](https://obsidian.md) – required
+- [Volcanic Glass Theme](https://github.com/thornling/volcanic-glass-theme-for-obsidian/) – theme file
+- [Windhawk](https://windhawk.net/) *(preferred)*
+- MicaForEveryone *(optional)*
+	- [GitHub](https://github.com/MicaForEveryone/MicaForEveryone) or [Windows Store](https://apps.microsoft.com/detail/9p8v68p4z78p?hl=en-US&gl=US)
 
-###### setting up windows transparency:
-1. download windhawk
-2. install [translucent windows mod](https://windhawk.net/mods/translucent-windows), enable, and select blend mode (i like blur or acrylic)
-- (optional) download micaforeveryone
-- set backdrop type, blur behind
-###### installing the theme:
-1. clone or download this repository
-2. in obsidian: go to settings > appearance > themes and click the folder icon to open your vault’s `.obsidian/themes/` folder
-3. move the downloaded folder into the `themes` folder
-4. back in obsidian, select volcanic glass from the dropdown
-###### css snippet: (alternative)
-1. in obsidian: go to settings > appearance > css snippets and click the folder icon to open your vault’s `.obsidian/snippets/` folder
-2. create a new txt document there and change the txt to css.
-3. go to the github, click on theme.css, and copy everything starting from /* variables \*/
-4. paste into the css. save.
-5. back in obsidian, toggle volcanic glass (or whatever you named your css) on from the snippets list.
+###### Setting up Windows transparency:
+1. Download Windhawk.
+2. Install [Translucent Windows Mod](https://windhawk.net/mods/translucent-windows), Enable, and select Blend Mode *(Blur or Acrylic preferred)*.
+- *(optional)* Download MicaForEveryone.
+- Set Backdrop Type, Blur Behind.
+###### Installing the theme:
+1. Clone or download this repository.
+2. In Obsidian: go to Settings > Appearance > Themes and click the folder icon to open your vault’s `.obsidian/themes/` folder.
+3. Move the downloaded folder into the `themes` folder.
+4. Back in Obsidian, select Volcanic Glass from the dropdown.
+###### Using a CSS Snippet: *(alternative)*
+1. In Obsidian: go to Settings > Appearance > CSS Snippets and click the folder icon to open your vault’s `.obsidian/snippets/` folder
+2. Create a new .txt document there and change the .txt to .css.
+3. Go to the GitHub, click on theme.css, and copy everything starting from /* variables \*/
+4. Paste into the CSS. Save.
+5. Back in Obsidian, toggle on your newly created snippet from the Snippets list.
 
-###### credits:
+###### Credits:
 [Obsidian-Transparent](https://github.com/Oczko24/Obsidian-transparent) by Oczko24
-###### upcoming:
-- mac version
-- mobile wallpaper plugin
+###### Upcoming:
+- Mac version
+- Mobile wallpaper plugin
