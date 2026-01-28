@@ -88,6 +88,7 @@ body.obsidian-app {
     /* modal */
 .modal,
 .prompt,
+.hover-popover,
 .suggestion-container,
 .suggestion-container[class*="mod-"],
       /* mobile */
@@ -115,6 +116,7 @@ body.obsidian-app {
 .theme-dark :is(
   .modal,
   .prompt,
+  .hover-popover,
   .suggestion-container,
   .suggestion-container[class*="mod-"]
 )::after {
@@ -330,7 +332,7 @@ body.obsidian-app {
   /* tables */
 .cm-embed-block.cm-table-widget .table-wrapper {
   background-color: var(--glass-window);
-  border-radius: 2px;
+  border-radius: 4px;
   overflow: hidden; 
   box-shadow: 
     inset 0px 0px 15px 2px rgba(0,0,0,0.2),
@@ -340,6 +342,19 @@ body.obsidian-app {
 .table-editor th,
 .table-editor td {
   border: 1px solid var(--text-muted-inactive) !important;
+}
+    /* embed */
+.markdown-preview-view .el-table {
+  background-color: var(--glass-window);
+  border-radius: 4px;
+  box-shadow: 
+    inset 0px 0px 15px 2px rgba(0,0,0,0.2),
+    inset 0px 0px 5px 1px rgba(0,0,0,0.4),
+    0 1px 1px rgba(255,255,255,0.1);
+}
+.markdown-preview-view th, 
+.markdown-preview-view td {
+    border: 1px solid var(--text-muted-inactive) !important;
 }
   /* text areas */
 textarea.file-recovery-text,
@@ -357,9 +372,9 @@ textarea.file-recovery-text,
   backdrop-filter: var(--blur-overlay);
   -webkit-backdrop-filter: var(--blur-overlay);
   background-color: var(--glass-window);
-  width: calc(100% - 8px) !important; 
-  margin-left: 4px;
-  margin-right: 4px;
+  width: calc(100% - 16px) !important; 
+  margin-left: 8px;
+  margin-right: 8px;
   box-shadow:
     0 10px 20px rgba(0, 0, 0, 0.2),
     0 6px 6px rgba(0, 0, 0, 0.15),
@@ -377,13 +392,13 @@ textarea.file-recovery-text,
   background: rgba(0, 0, 0, 0.4);
 }
   /* canvas */
-.canvas-control-group.mod-raised,
+.canvas-card-menu,
 .canvas-controls .canvas-control-group.mod-raised {
   backdrop-filter: var(--blur-overlay);
   -webkit-backdrop-filter: var(--blur-overlay);
   border: none;
-  border-bottom: 0.1px solid rgba(0,0,0,0.2);
-  border-top: 0.1px solid rgba(255,255,255,0.1);
+  border-bottom: 1px solid rgba(0,0,0,0.2);
+  border-top: 1px solid rgba(255,255,255,0.1);
   background-color: transparent;
   box-shadow: 
     0 1px 4px rgba(0,0,0,0.2),
@@ -398,4 +413,25 @@ textarea.file-recovery-text,
   border-top: 0.1px solid rgba(255,255,255,0.1);
   box-shadow: 
     0 10px 20px rgba(0, 0, 0, 0.3);
+}
+    /* embed */
+svg.canvas-minimap {
+  background-color: var(--glass-menu);
+  backdrop-filter: var(--blur-overlay);
+  -webkit-backdrop-filter: var(--blur-overlay);
+  box-shadow: 
+    inset 0 4px 10px rgba(0,0,0,0.4),
+    inset 0 1px 8px rgba(0,0,0,0.3),
+    0 1px 1px rgba(255,255,255,0.1);
+  border-radius: 4px;
+  transition: 
+    background-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+svg.canvas-minimap path {
+  stroke: var(--glass-window-inactive);
+}
+svg.canvas-minimap rect {
+  fill: var(--text-faint);
+  filter: drop-shadow(0 2px 8px rgba(0,0,0,0.4));
 }
