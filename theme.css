@@ -1,14 +1,16 @@
 /* 
   name: Volcanic Glass 
-  version: 1.0.1
+  version: 1.1.0
   author: thornling
-  description: A transparent theme for Dark/Light Mode (Windows only) */
+  description: A transparent theme for Dark/Light mode (desktop only) */
 
 /* variables */
-body {
+:is(
+  .mod-windows,
+  .is-windows
+) {
   --blur-window: blur(5px);
   --blur-overlay: blur(25px) saturate(150%) brightness(80%);
-  --text-normal-inactive: rgba(0,0,0,0.9);
 }
 .theme-dark {
   --glass-window: rgba(0,0,0,0.3);
@@ -16,16 +18,18 @@ body {
   --glass-menu: rgba(0,0,0,0.6);
 
   --glass-window-inactive: rgba(255,255,255,0.1);
-  --glass-window-active: rgba(30,30,30,0.7);
   
   --text-normal: rgba(255,255,255,1);
   --text-muted: rgba(255,255,255,0.68);
   --text-faint: rgba(255,255,255,0.25);
 
-  --text-muted-inactive: rgba(0,0,0,0.7);
+  --text-normal-inactive: rgba(255,255,255,0.8);  
+  --text-muted-inactive: rgba(255,255,255,0.5);
   --text-embossed: rgba(0,0,0,0.9);
 
   --dropdown-color: rgba(20,20,20,1);
+
+  --modal-boost: rgba(0,0,0,0.7);
 
   --background-modifier-hover: rgba(255,255,255,0.05);
   --interactive-hover: rgba(255,255,255,0.01);
@@ -44,16 +48,18 @@ body {
   --glass-menu: rgba(225,240,255,0.6);
   
   --glass-window-inactive: rgba(255,255,255,0.35);
-  --glass-window-active: rgba(255,255,255,0.8);
 
   --text-normal: rgba(0,0,0,1);
   --text-muted: rgba(0,0,0,0.68);
   --text-faint: rgba(0,0,0,0.25);
 
+  --text-normal-inactive: rgba(0,0,0,0.7);
   --text-muted-inactive: rgba(0,0,0,0.4);
   --text-embossed: rgba(0,0,0,0.8);
 
   --dropdown-color: rgba(230,230,230,1);
+
+  --modal-boost: rgba(255,255,255,0.5);
 
   --background-modifier-hover: rgba(255,255,255,0.12);
   --interactive-hover: rgba(255,255,255,0.5);
@@ -66,13 +72,25 @@ body {
   --active-gradient-1: rgba(255,255,255,0.8);
   --active-gradient-2: rgba(255,255,255,0.5);
 }
+:is(
+  .mod-windows,
+  .is-windows
+).theme-light {
+  --modal-boost: rgba(255,255,255,0.1);
+}
+:is(
+  .mod-macos,
+  .is-macos
+).theme-light {
+  --modal-boost: rgba(255,255,255,0.7);
+}
   /* base transparency */
-.theme-dark, .theme-light {
+body {
   --color-base-00: transparent;
   --background-primary: transparent;
   --background-primary-alt: transparent;
   --background-secondary: transparent;
-  --background-secondary-alt: transparent;
+  --background-secondary-alt: transparent !important;
   --workspace-background-translucent: transparent;
   --background-modifier-border: transparent;
 }
@@ -113,7 +131,10 @@ body.obsidian-app {
     opacity 0.3s ease,
     box-shadow 0.3s ease;
 }
-.theme-dark :is(
+:is(
+  .mod-macos,
+  .is-macos
+) :is(
   .modal,
   .prompt,
   .hover-popover,
@@ -125,7 +146,7 @@ body.obsidian-app {
   inset: 0;
   z-index: -1;
   clip-path: inherit;
-  background: rgba(0, 0, 0, 0.3);
+  background: var(--modal-boost);
 }
     /* menu */
 .menu,
@@ -157,7 +178,7 @@ body.obsidian-app {
 ):not(.mod-active)
   svg {	
   stroke-width: 2.5px;
-  color: var(--text-muted-inactive);
+  color: rgba(0,0,0,0.8);
   filter: drop-shadow(-0.5px 0.5px 0px rgba(255,255,255,0.1));
 }
     /* x button */
@@ -222,12 +243,52 @@ body.obsidian-app {
     var(--inactive-gradient-1) 0%,
     var(--inactive-gradient-2) 90%,
     var(--inactive-gradient-3) 100%);
+  background-color: var(--glass-modal);
   backdrop-filter: var(--blur-overlay);
   -webkit-backdrop-filter: var(--blur-overlay);
   transition: 
     background-color 0.3s ease,
     opacity 0.3s ease,
     box-shadow 0.3s ease;
+}
+:is(
+  .mod-macos,
+  .is-macos
+).theme-dark .mod-stacked .workspace-leaf-content:not(
+  [data-type="file-explorer"],
+  [data-type="search"],
+  [data-type="bookmark"],
+  [data-type="backlink"],
+  [data-type="outgoing-link"],
+  [data-type="tag"],
+  [data-type="outline"]
+)::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  clip-path: inherit;
+  background: var(--glass-menu);
+}
+:is(
+  .mod-macos,
+  .is-macos
+).theme-light .mod-stacked .workspace-leaf-content:not(
+  [data-type="file-explorer"],
+  [data-type="search"],
+  [data-type="bookmark"],
+  [data-type="backlink"],
+  [data-type="outgoing-link"],
+  [data-type="tag"],
+  [data-type="outline"]
+)::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  clip-path: inherit;
+  background: var(--modal-boost);
+  opacity: 0.9;
 }
       /* active */
 .mod-stacked .workspace-leaf.mod-active:has(.workspace-leaf-content:not(
@@ -243,13 +304,30 @@ body.obsidian-app {
     140deg,
     var(--active-gradient-1) 0%,
     var(--active-gradient-2) 100%);
-  background-color: var(--glass-window);
+  background-color: var(--glass-modal);
+  opacity: 0.8;
   clip-path: inset(-100px -100px -100px 0px);
   box-shadow: 
     0 0 0 1px rgba(0,0,0,0.1),
     0 10px 20px rgba(0,0,0,0.5),
     0 20px 50px rgba(0,0,0,0.4),
     0 0 80px rgba(0,0,0,0.8);
+}
+.theme-dark .mod-stacked .workspace-leaf.mod-active:has(.workspace-leaf-content:not(
+  [data-type="file-explorer"],
+  [data-type="search"],
+  [data-type="bookmark"],
+  [data-type="backlink"],
+  [data-type="outgoing-link"],
+  [data-type="tag"],
+  [data-type="outline"]
+))::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  clip-path: inherit;  
+  background: var(--modal-boost);
 }
     /* spine */
 .mod-stacked .workspace-tab-header {
@@ -266,15 +344,29 @@ body.obsidian-app {
     opacity 0.3s ease,
     box-shadow 0.3s ease;
 }
+:is(
+  .mod-macos,
+  .is-macos
+) .mod-stacked .workspace-tab-header-inner {
+  background-color: var(--glass-modal);
+}
       /* active */
 .mod-stacked .workspace-tab-header:has(+ .workspace-leaf.mod-active) {
-  background-color: var(--glass-window-active) !important;
+  background-color: var(--glass-modal) !important;
   clip-path: inset(-100px 0px -100px -100px);
   box-shadow: 
     0 0 0 1px rgba(0,0,0,0.1),
     0 10px 20px rgba(0,0,0,0.3),
     0 20px 50px rgba(0,0,0,0.2),
     0 0 80px rgba(0,0,0,0.4) !important;
+}
+:is(
+  .mod-macos,
+  .is-macos
+).theme-light .mod-stacked .workspace-tab-header:has(
+  + .workspace-leaf.mod-active
+) .workspace-tab-header-inner {
+  background-color: var(--modal-boost) !important;
 }
         /* title */
 .mod-stacked .workspace-tab-header:has(+ .workspace-leaf.mod-active) .workspace-tab-header-inner-title {
@@ -341,7 +433,7 @@ body.obsidian-app {
 }
 .table-editor th,
 .table-editor td {
-  border: 1px solid var(--text-muted-inactive) !important;
+  border: 1px solid var(--glass-menu) !important;
 }
     /* embed */
 .markdown-preview-view .el-table {
@@ -389,7 +481,8 @@ textarea.file-recovery-text,
   inset: 0;
   z-index: -1;
   clip-path: inherit;
-  background: rgba(0, 0, 0, 0.4);
+  border-radius: 4px;
+  background: var(--glass-modal);
 }
   /* canvas */
 .canvas-card-menu,
