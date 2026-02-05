@@ -44,7 +44,8 @@ source: 1041uuu
 ## Links
 - [Obsidian](https://obsidian.md) – required
 - [Volcanic Glass Theme](https://github.com/thornling/volcanic-glass-theme-for-obsidian/) – theme file
-- [CSS Editor](https://github.com/Zachatoo/obsidian-css-editor) community plugin *(optional)* create/edit CSS snippets on mobile
+- [CSS Editor](https://github.com/Zachatoo/obsidian-css-editor) - community plugin *(optional)*
+	- create/edit CSS snippets on mobile
 ###### Windows:
 - [Windhawk](https://windhawk.net/) *(preferred)*
 - MicaForEveryone *(optional)*
@@ -56,7 +57,7 @@ source: 1041uuu
 1. Download Windhawk.
 2. Install [Translucent Windows Mod](https://windhawk.net/mods/translucent-windows), Enable, and select Blend Mode *(Blur or Acrylic preferred)*.
 - *(optional)* Download MicaForEveryone.
-- Set Backdrop Type, Blur Behind.
+	- Set Backdrop Type, Blur Behind.
 - *(recommendation)* Hardware acceleration may help with lag.
 ###### On Mac:
 Note: due to native translucency and backdrop filters being mutually exclusive on Mac, this theme disables blur and increases contrast when native translucency is active.
@@ -66,16 +67,16 @@ Note: due to native translucency and backdrop filters being mutually exclusive o
 #### Applying the theme
 1. In Obsidian: go to Settings > Appearance > CSS snippets and click the folder icon to open your vault’s `.obsidian/snippets/` folder.
 2. Create a new .txt document there and change the .txt to .css.
-  - *(alternative)* For mobile users (or general convenience), install the CSS Editor community plugin. In your editor, open Command palette (Cmd/Ctrl P or swipe down from the top) and select CSS Editor: Create CSS snippet
+	- *(alternative)* For mobile users (or general convenience), install the CSS Editor community plugin. In your editor, open Command palette (Cmd/Ctrl P or swipe down from the top) and select CSS Editor: Create CSS snippet
 3. Go to the GitHub, open theme.css and copy everything.
 4. Paste into the CSS. Save.
 5. Back in Obsidian, toggle on your newly created snippet from the CSS snippets list.
 #### Wallpaper *(recommended for mobile)*
-Due to how mobile handles app windows, having your home screen actually show through your app window is unachievable. Instead, you can fake it by using your wallpaper or any other image in the background of the app window. Also consider this option if you don't like how native vibrancy looks on Mac (but make sure to toggle off Translucent window to activate blur), or if you don't want to download third party apps on Windows.
+Due to how mobile handles app windows, your home screen won't actually show through your app window. Instead, you can fake it by using your wallpaper or any other image in the background of the app window. Also consider this option if you don't like how native vibrancy looks on Mac (but make sure to toggle off Translucent window to activate blur), or if you don't want to download third party apps on Windows.
 1. In Obsidian: go to Settings > Appearance > CSS snippets and click the folder icon to open your vault’s `.obsidian/snippets/` folder.
 2. Create a new .txt document there and change the .txt to .css. This is the snippet to apply your wallpaper.
-  - *(alternative)* For mobile users (or general convenience), install the CSS Editor community plugin. In your editor, open Command palette (Cmd/Ctrl P or swipe down from the top) and select CSS Editor: Create CSS snippet
-3. Paste this code:
+	- *(alternative)* For mobile users (or general convenience), install the CSS Editor community plugin. In your editor, open Command palette (Cmd/Ctrl P or swipe down from the top) and select CSS Editor: Create CSS snippet
+3. Paste this code and save:
 ```
 body.obsidian-app {
   background-image: var(--wallpaper-image);
@@ -84,17 +85,17 @@ body.obsidian-app {
   background-attachment: fixed;
 }
 ```
-  - *(optional)* If you don't care about the wallpaper loading offline, you can replace `var(--wallpaper-image)` with `url('')`; just paste your url between the two single quotes. Steps 4-6 do not apply.
+- *(optional)* If you don't care about the wallpaper loading offline, you can replace `var(--wallpaper-image)` with `url('')`; just paste your url between the two single quotes and skip to step 7.
 4. Make another CSS snippet. This defines the `wallpaper-image` variable with base64.
-5. Paste this code:
+5. Paste this code and save:
 ```
 :root {
   --wallpaper-image: url('data:image/png;base64,');
 }
 ```
-  - *(double-check)* Make sure to replace `png` with your actual image type.
-6. Find an online base64 converter. Upload your wallpaper, convert, and copy the code after `base64,` before the last single quote.
-  - Note: base64 turns images into extremely long strings of text. You may experience lag or find it difficult to navigate a file that contains base64.
+- *(double-check)* Make sure to replace `png` with your actual image type.
+6. Find an online base64 converter. Upload your wallpaper, convert, and paste the code after `base64,` before the last single quote.
+	- Note: base64 turns images into extremely long strings of text. You may experience lag or find it difficult to navigate a file that contains base64.
 7. Back in Obsidian, toggle on your newly created snippet(s) from the CSS Snippets list.
 #### Credits:
 [Obsidian-Transparent](https://github.com/Oczko24/Obsidian-transparent) by Oczko24
@@ -103,5 +104,4 @@ body.obsidian-app {
 - Wallpaper upload plugin
 - Translucent stacks plugin
 - Pseudo Mica (windowed wallpaper) plugin
-
 - Style settings
