@@ -1,6 +1,6 @@
 # Volcanic Glass
 <p align="center">
-  <img src="screenshot.png">
+  <img src="assets/banner.png">
 </p>
 
 ## Description
@@ -105,3 +105,4 @@ body.obsidian-app {
 - Translucent stacks plugin
 - Pseudo Mica (windowed wallpaper) plugin
 - Style settings
+
