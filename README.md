@@ -33,12 +33,6 @@ A Dark/Light Mode transparent theme for Mac, Windows, and mobile. Compatible wit
   <img src="assets/phonedark.png" width="45%" />
   <img src="assets/phonelight.png" width="45%" />
 </p>
-
-###### Sample Wallpaper
-<p align="center">
-  <img src="assets/sample wallpaper.png" width="90%">
-</p>
-source: 1041uuu
 </details>
 
 ## Links
