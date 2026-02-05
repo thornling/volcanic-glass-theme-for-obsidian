@@ -1,16 +1,20 @@
 /* 
   name: Volcanic Glass 
-  version: 1.1.0
+  version: 1.2.0
   author: thornling
-  description: A transparent theme for Dark/Light mode (desktop only) */
+  description: A transparent theme for Dark/Light mode */
 
 /* variables */
-:is(
-  .mod-windows,
-  .is-windows
-) {
-  --blur-window: blur(5px);
-  --blur-overlay: blur(25px) saturate(150%) brightness(80%);
+:root {
+  --blur-window: blur(5px) saturate(105%) brightness(110%);
+  --blur-overlay: blur(25px) saturate(140%) brightness(80%);
+  /* mobile */
+  --bright-overlay: saturate(105%) brightness(150%);
+}
+  /* mac translucent window (incompatible with backdrop filter) */
+body.mod-macos.is-translucent {
+  --blur-window: none !important;
+  --blur-overlay: none !important;
 }
 .theme-dark {
   --glass-window: rgba(0,0,0,0.3);
@@ -59,7 +63,7 @@
 
   --dropdown-color: rgba(230,230,230,1);
 
-  --modal-boost: rgba(255,255,255,0.5);
+  --modal-boost: rgba(255,255,255,0.1);
 
   --background-modifier-hover: rgba(255,255,255,0.12);
   --interactive-hover: rgba(255,255,255,0.5);
@@ -72,16 +76,7 @@
   --active-gradient-1: rgba(255,255,255,0.8);
   --active-gradient-2: rgba(255,255,255,0.5);
 }
-:is(
-  .mod-windows,
-  .is-windows
-).theme-light {
-  --modal-boost: rgba(255,255,255,0.1);
-}
-:is(
-  .mod-macos,
-  .is-macos
-).theme-light {
+body.mod-macos.is-translucent.theme-light {
   --modal-boost: rgba(255,255,255,0.7);
 }
   /* base transparency */
@@ -103,29 +98,40 @@ body {
 
 /* containers */
   /* app */
-body.obsidian-app {
+body:not(.is-mobile).obsidian-app::before {
+  content: "";
+  position: fixed;
+  inset: 0;  
+  z-index: -1;
+  pointer-events: none;
   background-color: var(--glass-window);
   backdrop-filter: var(--blur-window);
   -webkit-backdrop-filter: var(--blur-window);
 }
-  /* overlay */
-    /* modal */
+    /* wallpaper blur */
+body.is-mobile.obsidian-app::before {
+  content: "";
+  position: fixed;
+  inset: 0;  
+  z-index: -1;
+  pointer-events: none;
+  background-color: var(--glass-window);
+  backdrop-filter: var(--blur-overlay);
+  -webkit-backdrop-filter: var(--blur-overlay);
+}
+  /* modal */
 .modal,
 .prompt,
 .hover-popover,
 [class*="suggestion-container"],
       /* mobile */
-.workspace-drawer .mod,
-.workspace-drawer-inner,
-.mobile-toolbar-options-list,
-.workspace-drawer-tab-options-list,
-.is-mobile .mod-raised {
+body:not(.is-phone) .workspace-drawer:is(
+  .mod-left,
+  .mod-right
+):not(.is-pinned) {
+  background-color: var(--glass-modal);
   backdrop-filter: var(--blur-overlay);
   -webkit-backdrop-filter: var(--blur-overlay);
-  background-color: var(--glass-modal) !important;
-  border: none;
-  border-bottom: 1px solid rgba(0,0,0,0.2);
-  border-top: 1px solid rgba(255,255,255,0.03);
   box-shadow: 
     0 0 0 1px rgba(0,0,0,0.05),
     0 10px 20px rgba(0,0,0,0.15),
@@ -136,14 +142,23 @@ body.obsidian-app {
     opacity 0.3s ease,
     box-shadow 0.3s ease;
 }
-:is(
-  .mod-macos,
-  .is-macos
-) :is(
+    /* shadows for desktop */
+body:not(.is-mobile) :is(
   .modal,
   .prompt,
   .hover-popover,
-  [class*="suggestion-container"],
+  [class*="suggestion-container"]
+) {
+  border: none;
+  border-bottom: 1px solid rgba(0,0,0,0.2);
+  border-top: 1px solid rgba(255,255,255,0.03);
+}
+    /* compensate for blur filter */
+body.mod-macos.is-translucent :is(
+  .modal,
+  .prompt,
+  .hover-popover,
+  [class*="suggestion-container"]
 )::after {
   content: "";
   position: absolute;
@@ -152,33 +167,107 @@ body.obsidian-app {
   clip-path: inherit;
   background: var(--modal-boost);
 }
-    /* menu */
-.menu,
+    /* shadows for tablet */
+body.theme-dark.is-tablet .workspace-drawer:is(
+  .mod-left,
+  .mod-right
+):not(.is-pinned),             
+.modal.modal.mod-settings {
+  box-shadow: 
+    0 0 0 1px rgba(0,0,0,0.05),
+    0 10px 20px rgba(0,0,0,0.4),
+    0 20px 50px rgba(0,0,0,0.6),
+    0 0 80px rgba(0,0,0,0.8) !important;
+}
+    /* slider fix */
+body [class="slider"] {
+  --slider-track-background: var(--text-faint);
+}
+  /* menu */
+body:not(.is-mobile) .menu,
 .notice,
-      /* mobile */
-.mobile-navbar,
-.native-menu,
-.mobile-option-container {
+    /* mobile */
+.tooltip {
+  background-color: var(--glass-menu) !important;
   backdrop-filter: var(--blur-overlay);
   -webkit-backdrop-filter: var(--blur-overlay);
-  background-color: var(--glass-menu) !important;
   border: none;
 }	
+      /* transparent menus */
+body:not(.is-mobile) :is(
+  .prompt-results,
+  .suggestion-container,
+  .suggestion-item
+) {
+  background-color: transparent;
+  backdrop-filter: var(--blur-overlay);
+  -webkit-backdrop-filter: var(--blur-overlay);
+}
+body:not(.mod-macos).is-mobile .suggestion-container {
+  background-color: var(--glass-modal);
+  backdrop-filter: var(--blur-overlay);
+  -webkit-backdrop-filter: var(--blur-overlay);
+}
+      /* tab options */
+body.is-phone :is(
+  .workspace-drawer:is(.mod-left, .mod-right)
+  .workspace-tab-header-inner,
+  .workspace-drawer-tab-options-list
+) {
+  background-color: transparent;
+  backdrop-filter: var(--blur-overlay);
+  -webkit-backdrop-filter: var(--blur-overlay);
+}
+body:not(.is-phone) :is(
+  .workspace-drawer:is(
+    .mod-left,
+    .mod-right
+  ) 
+  .workspace-drawer-tab-options-list
+) {
+  backdrop-filter: var(--blur-overlay);
+  -webkit-backdrop-filter: var(--blur-overlay);
+  background-color: var(--glass-menu);
+}
+        /* button overlap fix */
+.workspace-drawer.mod-right 
+.workspace-drawer-tab-options:not(.is-collapsed) ~ 
+.workspace-drawer-active-tab-content .nav-buttons-container {
+  z-index: -1 !important;
+  pointer-events: none !important;
+}
+      /* search bar fix */
+body.is-tablet .workspace-drawer.mod-right [class="search-input-container"] {
+  margin-top: 64px;
+}
+      /* tab switcher */
+.mobile-tab-switcher {
+  backdrop-filter: var(--blur-overlay);
+  -webkit-backdrop-filter: var(--blur-overlay);
+}
+.mobile-tab-preview,
+.mobile-tab-preview-embed {
+  background-color: var(--glass-modal);
+  backdrop-filter: var(--blur-window);
+  -webkit-backdrop-filter: var(--blur-window);
+}
 
 /* workspace */
   /* inactive tabs */
     /* titles */
-.mod-stacked .workspace-tab-header .workspace-tab-header-inner-title {
+body:not(.is-mobile) .mod-stacked .workspace-tab-header .workspace-tab-header-inner-title {
   color: var(--text-embossed);
   filter: drop-shadow(-0.5px 0.5px 0px rgba(255,255,255,0.1));
 }
     /* icons */
-.mod-top-left-space .workspace-tab-header:not(.is-active) *,
-.mod-stacked :is(
-  .workspace-tab-header,
-  .workspace-leaf
-):not(.mod-active)
-  svg {	
+body:not(.is-mobile) :is(
+  .mod-top-left-space .workspace-tab-header:not(.is-active) *,
+  .mod-stacked :is(
+    .workspace-tab-header,
+    .workspace-leaf
+  ):not(.mod-active)
+    svg
+) {	
   stroke-width: 2.5px;
   color: rgba(0,0,0,0.8);
   filter: drop-shadow(-0.5px 0.5px 0px rgba(255,255,255,0.1));
@@ -195,27 +284,20 @@ body.obsidian-app {
 .mod-stacked .workspace-leaf:not(.mod-active) :has(
   .inline-title,
     /* content */
-  .cm-content) {
+  .cm-content
+) {
   color: var(--text-normal-inactive);
 }
-.mod-stacked .workspace-leaf:not(.mod-active) .workspace-leaf-content:not(
-  [data-type="file-explorer"],
-  [data-type="search"],
-  [data-type="bookmark"],
-  [data-type="backlink"],
-  [data-type="outgoing-link"],
-  [data-type="tag"],
-  [data-type="outline"]
-) {
+.mod-root .mod-stacked .workspace-leaf:not(.mod-active) .workspace-leaf-content {
   --text-normal: var(--text-normal-inactive);
   --text-muted: var(--text-muted-inactive);
   --view-header-title-color: var(--text-normal-inactive);
 }
       /* code and table fix */
 .mod-stacked .workspace-leaf:not(.mod-active) :is(
-  .cm-inline-code, 
+  .cm-inline-code,
   .HyperMD-codeblock,
-  .table-editor th, 
+  .table-editor th,
   .table-editor td
 ) {
   color: var(--text-muted-inactive);
@@ -232,15 +314,7 @@ body.obsidian-app {
 }
   /* stacked */
     /* leaf */
-.mod-stacked .workspace-leaf-content:not(
-  [data-type="file-explorer"],
-  [data-type="search"],
-  [data-type="bookmark"],
-  [data-type="backlink"],
-  [data-type="outgoing-link"],
-  [data-type="tag"],
-  [data-type="outline"]
-) {
+.mod-root .mod-stacked .workspace-leaf-content {
   background: linear-gradient(
     140deg,
     var(--inactive-gradient-1) 0%,
@@ -254,18 +328,7 @@ body.obsidian-app {
     opacity 0.3s ease,
     box-shadow 0.3s ease;
 }
-:is(
-  .mod-macos,
-  .is-macos
-).theme-dark .mod-stacked .workspace-leaf-content:not(
-  [data-type="file-explorer"],
-  [data-type="search"],
-  [data-type="bookmark"],
-  [data-type="backlink"],
-  [data-type="outgoing-link"],
-  [data-type="tag"],
-  [data-type="outline"]
-)::after {
+body.mod-macos.is-translucent.theme-dark .mod-root .mod-stacked .workspace-leaf-content::after {
   content: "";
   position: absolute;
   inset: 0;
@@ -273,18 +336,7 @@ body.obsidian-app {
   clip-path: inherit;
   background: var(--glass-menu);
 }
-:is(
-  .mod-macos,
-  .is-macos
-).theme-light .mod-stacked .workspace-leaf-content:not(
-  [data-type="file-explorer"],
-  [data-type="search"],
-  [data-type="bookmark"],
-  [data-type="backlink"],
-  [data-type="outgoing-link"],
-  [data-type="tag"],
-  [data-type="outline"]
-)::after {
+body.mod-macos.is-translucent.theme-light .mod-root .mod-stacked .workspace-leaf-content::after {
   content: "";
   position: absolute;
   inset: 0;
@@ -294,15 +346,8 @@ body.obsidian-app {
   opacity: 0.9;
 }
       /* active */
-.mod-stacked .workspace-leaf.mod-active:has(.workspace-leaf-content:not(
-  [data-type="file-explorer"],
-  [data-type="search"],
-  [data-type="bookmark"],
-  [data-type="backlink"],
-  [data-type="outgoing-link"],
-  [data-type="tag"],
-  [data-type="outline"]
-)) {
+.mod-root .mod-stacked .workspace-leaf.mod-active:has(.workspace-leaf-content
+) {
   background: linear-gradient(
     140deg,
     var(--active-gradient-1) 0%,
@@ -316,15 +361,7 @@ body.obsidian-app {
     0 20px 50px rgba(0,0,0,0.4),
     0 0 80px rgba(0,0,0,0.8);
 }
-.theme-dark .mod-stacked .workspace-leaf.mod-active:has(.workspace-leaf-content:not(
-  [data-type="file-explorer"],
-  [data-type="search"],
-  [data-type="bookmark"],
-  [data-type="backlink"],
-  [data-type="outgoing-link"],
-  [data-type="tag"],
-  [data-type="outline"]
-))::after {
+.theme-dark .mod-root .mod-stacked .workspace-leaf.mod-active:has(.workspace-leaf-content)::after {
   content: "";
   position: absolute;
   inset: 0;
@@ -341,16 +378,15 @@ body.obsidian-app {
   backdrop-filter: var(--blur-overlay);
   -webkit-backdrop-filter: var(--blur-overlay);
   border-radius: 4px 0 0 4px !important;
-  border-left: 1px solid rgba(255,255,255,0.1);
   transition: 
     background-color 0.3s ease,
     opacity 0.3s ease,
     box-shadow 0.3s ease;
 }
-:is(
-  .mod-macos,
-  .is-macos
-) .mod-stacked .workspace-tab-header-inner {
+body:not(.is-mobile) .mod-stacked .workspace-tab-header {
+  border-left: 1px solid rgba(255,255,255,0.1);
+}
+body.mod-macos.is-translucent .mod-stacked .workspace-tab-header-inner {
   background-color: var(--glass-modal);
 }
       /* active */
@@ -363,10 +399,7 @@ body.obsidian-app {
     0 20px 50px rgba(0,0,0,0.2),
     0 0 80px rgba(0,0,0,0.4) !important;
 }
-:is(
-  .mod-macos,
-  .is-macos
-).theme-light .mod-stacked .workspace-tab-header:has(
+body.mod-macos.is-translucent.theme-light .mod-stacked .workspace-tab-header:has(
   + .workspace-leaf.mod-active
 ) .workspace-tab-header-inner {
   background-color: var(--modal-boost) !important;
@@ -384,26 +417,30 @@ body.obsidian-app {
   filter: none;
 }
 
-/* interactive */
+/* interactive elements */
   /* status bar */
 .status-bar {
   background-color: var(--glass-modal);
   backdrop-filter: var(--blur-overlay);
   -webkit-backdrop-filter: var(--blur-overlay);
 }
+
   /* input box */
-body :is(
-textarea, 
-.multi-select-container, 
-input.metadata-input-text, 
-input:is(
-  [type='date'], 
-  [type='datetime-local'], 
-  [type='text'], 
-  [type='search'], 
-  [type='email'], 
-  [type='password'], 
-  [type='number']))  {
+body:not(.is-mobile) :is(
+  textarea,
+  .multi-select-container,
+  input.metadata-input-text,
+  :is(.prompt-input, input
+  ):is(
+    [type='date'],
+    [type='datetime-local'],
+    [type='text'],
+    [type='search'],
+    [type='email'],
+    [type='password'],
+    [type='number']
+  )
+):not([type='color']) {
   background-color: var(--glass-window);
   backdrop-filter: var(--blur-overlay);
   -webkit-backdrop-filter: var(--blur-overlay);
@@ -415,16 +452,41 @@ input:is(
     background-color 0.2s ease,
     box-shadow 0.2s ease;
 }
+    /* mobile */
+body.is-mobile :is(
+  textarea,
+  .multi-select-container,
+  input.metadata-input-text,
+  :is(
+    .prompt-input,
+    input
+  ):is(
+    [type='date'],
+    [type='datetime-local'],
+    [type='text'],
+    [type='search'],
+    [type='email'],
+    [type='password'],
+    [type='number'])
+):not([type='color']) {
+  --interactive-normal: transparent;
+  background-color: transparent;
+  backdrop-filter: var(--bright-overlay);
+  -webkit-backdrop-filter: var(--bright-overlay);
+  border-radius: 36px;
+  border: none;
+  box-shadow: none;
+}
     /* focus */
-:is(
-  textarea, 
-  .multi-select-container, 
+body:not(.is-mobile) :is(
+  textarea,
+  .multi-select-container,
   input:is(
-    .metadata-input-text, 
+    .metadata-input-text,
     [type])
 ) :is(
-  :active, 
-  :focus, 
+  :active,
+  :focus,
   :focus-visible
 ) {
   background-color: var(--glass-modal);
@@ -436,15 +498,82 @@ input:is(
 .dropdown option {
   background-color: var(--dropdown-color);
 }
+  /* mobile buttons */
+body.mod-ios .app-container .horizontal-main-container {
+  --interactive-normal: transparent !important;
+}
+    /* layering */
+      /* no contrast needed */
+body:not(.is-macos) .clickable-icon.workspace-drawer-header-icon,
+body:is(
+  .workspace-split.mod-root :is(.view-content *),
+  .workspace-drawer-header,
+  .modal-header
+) .clickable-icon {
+  background-image: none;
+  backdrop-filter: var(--bright-overlay);
+  -webkit-backdrop-filter: var(--bright-overlay);
+  border: none;
+  box-shadow: none;
+}
+      /* more contrast needed */
+.workspace-drawer-active-tab-content .nav-buttons-container .clickable-icon {
+  -webkit-backdrop-filter: var(--blur-window);
+  backdrop-filter: var(--blur-window);
+  background-color: var(--glass-menu);
+}
+body.is-tablet .workspace-drawer-active-tab-content .nav-buttons-container .clickable-icon {
+  box-shadow: 0 10px 20px rgba(0,0,0,0.2),
+    0 6px 6px rgba(0,0,0,0.15),
+    0 0 0 1px rgba(0,0,0,0.1);
+}
+body.is-phone :is(
+  .workspace-split .clickable-icon:not(.view-content *),
+  .modal-close-button.mod-raised.clickable-icon,
+  .modal-header .clickable-icon
+) {
+  -webkit-mask-image: -webkit-radial-gradient(white, black);
+  background-color: var(--glass-modal);
+  -webkit-backdrop-filter: none;
+  backdrop-filter: var(--blur-modal);
+  border: none;
+  box-shadow: none;
+}
+.mobile-navbar {
+  backdrop-filter: var(--blur-window);
+  -webkit-backdrop-filter: var(--blur-window);
+  border: none;
+  box-shadow: none;
+}
+      /* extra contrast needed */
+.dropdown,
+:is(
+  .setting-item-control,
+  .modal-button-container,
+  .community-modal-button-container
+) button:not(.mod-cta),
+.modal-container input:is(
+  [type='date'],
+  [type='datetime-local'],
+  [type='text'],
+  [type='search'],
+  [type='email'],
+  [type='password'],
+  [type='number']
+) {
+  background-color: var(--glass-window-inactive) !important;
+}
   /* tables */
 .table-cell-wrapper {
   background-color: var(--glass-window);
   overflow: hidden;
   border: 1px solid var(--glass-menu) !important;
+}
+body:not(.is-mobile) .table-cell-wrapper {
   box-shadow: 
-  inset 0px 0px 15px 2px rgba(0,0,0,0.2),
-  inset 0px 0px 5px 1px rgba(0,0,0,0.4),
-  0 1px 1px rgba(255,255,255,0.1);
+    inset 0px 0px 15px 2px rgba(0,0,0,0.2),
+    inset 0px 0px 5px 1px rgba(0,0,0,0.4),
+    0 1px 1px rgba(255,255,255,0.1);
 }
 .table-editor th:first-child .table-cell-wrapper { 
   border-top-left-radius: 4px; 
@@ -478,7 +607,7 @@ input:is(
     inset 0px 0px 5px 1px rgba(0,0,0,0.4),
     0 1px 1px rgba(255,255,255,0.1);
 }
-.markdown-preview-view th, 
+.markdown-preview-view th,
 .markdown-preview-view td {
     border: 1px solid var(--glass-menu) !important;
 }
@@ -496,10 +625,11 @@ input:is(
   width: calc(100% - 16px) !important; 
   margin-left: 8px;
   margin-right: 8px;
+  overflow-x: hidden;
   box-shadow:
-    0 10px 20px rgba(0, 0, 0, 0.2),
-    0 6px 6px rgba(0, 0, 0, 0.15),
-    0 0 0 1px rgba(0, 0, 0, 0.1);
+    0 10px 20px rgba(0,0,0,0.2),
+    0 6px 6px rgba(0,0,0,0.15),
+    0 0 0 1px rgba(0,0,0,0.1);
   border-radius: 4px;
   border-bottom: 1px solid rgba(0,0,0,0.2);
   border-top: 1px solid rgba(255,255,255,0.03);
