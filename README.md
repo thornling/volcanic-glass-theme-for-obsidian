@@ -4,7 +4,7 @@
 </p>
 
 ## Description
-A Dark/Light Mode transparent theme for Mac, Windows, and mobile. It also works with background wallpapers.
+A Dark/Light Mode transparent theme for Mac, Windows, and mobile. Compatible with background wallpapers.
 
 ## Gallery
 <details>
@@ -38,7 +38,7 @@ A Dark/Light Mode transparent theme for Mac, Windows, and mobile. It also works 
 <p align="center">
   <img src="assets/sample wallpaper.png" width="90%">
 </p>
-*source: 1041uuu*
+source: 1041uuu
 </details>
 
 ## Links
@@ -103,4 +103,5 @@ body.obsidian-app {
 - Wallpaper upload plugin
 - Translucent stacks plugin
 - Pseudo Mica (windowed wallpaper) plugin
+
 - Style settings
