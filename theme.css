@@ -192,6 +192,7 @@ body:not(.is-mobile) .menu,
   -webkit-backdrop-filter: var(--blur-overlay);
   border: none;
 }	
+    /* error */
 .tooltip.mod-error {
   background-color: var(--background-modifier-error) !important;
   opacity: 0.8 !important;
@@ -554,7 +555,10 @@ body.is-phone :is(
   .setting-item-control,
   .modal-button-container,
   .community-modal-button-container
-) button:not(.mod-cta),
+) button:not(
+  .mod-cta,
+  .mod-warning
+),
 .modal-container input:is(
   [type='date'],
   [type='datetime-local'],
