@@ -186,13 +186,16 @@ body [class="slider"] {
   /* menu */
 body:not(.is-mobile) .menu,
 .notice,
-    /* mobile */
 .tooltip {
   background-color: var(--glass-menu) !important;
   backdrop-filter: var(--blur-overlay);
   -webkit-backdrop-filter: var(--blur-overlay);
   border: none;
 }	
+.tooltip.mod-error {
+  background-color: var(--background-modifier-error) !important;
+  opacity: 0.8 !important;
+}
       /* transparent menus */
 body:not(.is-mobile) :is(
   .prompt-results,
